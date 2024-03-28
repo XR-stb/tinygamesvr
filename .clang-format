@@ -1,0 +1,38 @@
+---
+Language: Cpp
+BasedOnStyle: Google
+
+# 行长度
+ColumnLimit: 100
+
+# 缩进
+IndentWidth: 2
+
+# 指针和引用符号靠左
+PointerAlignment: Left
+
+# 命名空间内容不缩进
+NamespaceIndentation: None
+
+# 依次为 public:protected: private: 每个缩进1个空格
+AccessModifierOffset: -1
+
+# 左大括号不换行
+BreakBeforeBraces: Attach
+
+# 不格式化注释
+ReflowComments: false
+
+# // 后面添加一个空格
+SpacesInLineCommentPrefix:
+  Minimum: 1
+  Maximum: 1
+
+---
+Language: Proto
+BasedOnStyle: Google
+
+ColumnLimit: 100
+SpacesInLineCommentPrefix:
+  Minimum: 1
+  Maximum: 1
