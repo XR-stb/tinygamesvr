@@ -1,3 +1,4 @@
+import os
 import subprocess
 
 def log(log_str):
@@ -49,3 +50,12 @@ def exec_cmd(cmd, need_log=True, shell=True, **kwargs):
             log('run cmd failed: %s' % cmd_str)
 
     return ret_code
+
+def get_directories(path):
+    """
+    获取给定路径下的所有目录名
+    :param path: 要搜索的路径
+    :return: 目录名列表
+    """
+    directories = [d for d in os.listdir(path) if os.path.isdir(os.path.join(path, d))]
+    return directories

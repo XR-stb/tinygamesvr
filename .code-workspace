@@ -4,7 +4,36 @@
             "path": "."
         },
         {
-            "path": "golang"
+            "path": "golang/cloud"
         }
-    ]
+    ],
+    "settings": {
+        "clangd.arguments": [
+            "--background-index",
+            "-j=16",
+            "--pch-storage=memory",
+            "--compile-commands-dir=${workspaceFolder}/",
+            "--all-scopes-completion",
+            "--completion-style=detailed",
+            "--header-insertion=iwyu",
+            "--cross-file-rename",
+            "--enable-config",
+            "--clang-tidy"
+        ],
+        "go.lintTool": "golangci-lint",
+        "go.lintFlags": [],
+        "go.lintOnSave": "package",
+        "go.formatTool": "goimports",
+        "gopls": {
+            "formatting.local": "git.woa.com/wedo/golang/cloud"
+        },
+        "[python]": {
+            "editor.tabSize": 4,
+            "editor.formatOnSave": true,
+            "editor.defaultFormatter": "ms-python.black-formatter"
+        },
+        "[cpp]": {
+            "editor.defaultFormatter": "xaver.clang-format"
+        }
+    },
 }
