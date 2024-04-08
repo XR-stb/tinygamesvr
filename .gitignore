@@ -15,3 +15,8 @@ Makefile
 
 # clangd 缓存
 .cache/
+
+# proto生成的文件
+*.pb.cc
+*.pb.h
+*.pb.go

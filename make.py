@@ -77,7 +77,7 @@ class Make:
                     )
 
     def _genproto_(self):
-        util.exec_cmd("sh ./scripts/shell/gen_proto.sh")
+        util.exec_cmd("bash ./scripts/shell/gen_proto.sh")
 
 
 def parse_args():
@@ -102,7 +102,7 @@ def parse_args():
         choices=["all"] + get_cpp_servers() + get_golang_servers(),
     )
     build_parser.add_argument(
-        "--with_cmake",
+        "--with-cmake", # NOTE(tianbaosha): 这里使用了 - 不过在代码中读取变量使用下划线_
         action="store_true",
         help="choose build system, default is bazel",
     )
@@ -119,7 +119,7 @@ def parse_args():
     )
     # TODO: 更合理的做法：应该统一去读取运行目录的文件，而不是去运行cmake生成的或bazel生成bin文件？
     run_parser.add_argument(
-        "--with_cmake",
+        "--with-cmake",
         action="store_true",
         help="run server, default run bazel compile bin",
     )

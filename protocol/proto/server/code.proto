@@ -1,5 +1,7 @@
 syntax = "proto3";
 
+option go_package = ".;protocol";
+
 enum Code {
   SUCCESS = 0;
   ERROR = 1;

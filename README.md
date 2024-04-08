@@ -58,7 +58,7 @@ chmod +x ./make.py
 ./make.py build gamesvr chatsvr # 编译多个服务
 
 # cpp target 默认使用bazel编译，使用cmake编译如下
-./make.py build gamesvr --with_cmake
+./make.py build gamesvr --with-cmake
 ```
 
 ### 开发环境配置
@@ -73,9 +73,28 @@ clangd --version # version >= 14即可
 ```shell
 sudo apt install clang-format
 ```
-3. 代码提示
+4. 代码提示
 ```shell
 cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=on
 ```
 
-3. 配置clang-format
+5. 配置clang-format
+
+6. golang 下载protoc插件（用于生成proto go代码
+see: https://grpc.io/docs/languages/go/quickstart/
+```shell 
+go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.28
+go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.2
+export PATH="$PATH:$(go env GOPATH)/bin"
+```
+
+7. 安装对应的protoc 版本
+```shell
+# 如果遇到这个错误
+if(NOT "${_PROTOBUF_PROTOC_EXECUTABLE_VERSION}" VERSION_EQUAL "${Protobuf_VERSION}")
+    message(WARNING "Protobuf compiler version ${_PROTOBUF_PROTOC_EXECUTABLE_VERSION}"
+    " doesn't match library version ${Protobuf_VERSION}")
+endif()
+
+https://github.com/protocolbuffers/protobuf/releases/tag/v3.12.4
+```

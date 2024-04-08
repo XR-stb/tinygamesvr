@@ -1,38 +1,47 @@
-# pwd
-# -Iprotocol/proto/commom
+#!/bin/bash
 # cpp_out 是相对于当前proto文件的位置
-# find protocol/proto/server -name "*.proto" | xargs protoc --cpp_out=protocol/protoconf/server
-
 # protoc 默认在当前目录下搜索 -I 可指定路径搜索
 # --cpp_out 是相对于当前运行protoc命令的位置，用于指定生成的cpp代码位置，可用绝对路径
+# 生成出来的文件，路径会带上protoc 执行前相对于 proto文件的路径
+# 如 有 home/gamesvr/proto/a.proto
+# 若在 gamesvr 下执行 protoc 则需要指定proto路径 proto/*.proto 然后指定生成位置为home/gamesvr/protoconf/
+# 则最终生成出来的路径为home/gamesvr/protoconf/proto/a.pb.cc 等，需要我们一定是在当前proto目录执行protoc命令最好
+# 这样就比较容易控制生成的文件位置
 
-# cd protocol/proto/server && protoc --cpp_out=../../protoconf/server -I. *.proto 
-# protoc --cpp_out=/home/tianbaosha/cpp_code/tinygamesvr/protocol/protoconf/server \
-#        --proto_path=/home/tianbaosha/cpp_code/tinygamesvr/protocol/proto/server \
-#        --proto_path=/home/tianbaosha/cpp_code/tinygamesvr/protocol/proto/common \
-#        /home/tianbaosha/cpp_code/tinygamesvr/protocol/proto/server/*.proto
-       
-#!/bin/bash
-
-# 获取当前脚本的完整路径
-
-cd ../../
-
+# 获取当前sh文件的完整路径
 SCRIPT_PATH=$(readlink -f "$0")
+# 获取上级目录名
+SHELL_DIR=$(dirname "$SCRIPT_PATH")
+SCRIPTS_DIR=$(dirname "$SHELL_DIR")
+# 获取到工作区路径
+WORKSPACE_DIR=$(dirname "$SCRIPTS_DIR")
 
-SCRIPT_DIR=$(dirname "$SCRIPT_PATH")
-
+# 所有proto的文件路径
 PROTO_PATH="protocol/proto/server"
-RELATIVE_CPP_OUT_PATH="protocol/protoconf/server"
 
-CPP_OUT_PATH="${SCRIPT_DIR}/${RELATIVE_CPP_OUT_PATH}"
+# cpp 文件pb.c/pb.h输出 路径
+CPP_OUT_PATH="${WORKSPACE_DIR}/protocol/protoconf/server"
+echo "CPP Output path: $CPP_OUT_PATH"
 
-echo "Output path: $CPP_OUT_PATH"
+# go 文件pb.go输出 路径
+GOLANG_OUT_PATH="${WORKSPACE_DIR}/golang/cloud/protoconf/server"
+echo "GOLANG Output path: $GOLANG_OUT_PATH"
 
-PROTOC_CMD="protoc --cpp_out=${CPP_OUT_PATH} --proto_path=${PROTO_PATH}"
-
-# 添加你要编译的.proto文件
-PROTOC_CMD="${PROTOC_CMD} ${PROTO_PATH}/*.proto"
-
-# 执行命令
+# 生成grpc.pb.cc/h
+eval "pushd ${WORKSPACE_DIR}/${PROTO_PATH}"
+PROTOC_CMD="protoc --grpc_out=${CPP_OUT_PATH} --plugin=protoc-gen-grpc=`which grpc_cpp_plugin` *.proto"
 eval $PROTOC_CMD
+eval "popd"
+
+# 生成pb.xxx
+PROTOC_CMD="protoc --proto_path=${PROTO_PATH} \
+            --cpp_out=${CPP_OUT_PATH} \
+            --go_out=${GOLANG_OUT_PATH} \
+            --go_opt=paths=source_relative \
+            ${PROTO_PATH}/*.proto"
+eval $PROTOC_CMD
+
+# 生成grpc.pb.go
+PROTOC_CMD="protoc --go-grpc_out=${GOLANG_OUT_PATH} ${PROTO_PATH}/*.proto"
+eval $PROTOC_CMD
+
