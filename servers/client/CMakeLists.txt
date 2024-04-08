@@ -1,13 +1,13 @@
-project(gamesvr)
+project(client)
 
 # CPP 版本
 set(CMAKE_CXX_STANDARD 17)
 
 # 搜索所有头文件和cpp文件，并打印出来
-file(GLOB_RECURSE HEADERS "src/*.h" "../../protocol/protoconf/server/*.h")
+file(GLOB_RECURSE HEADERS "*.h" "../../protocol/protoconf/server/*.h")
 # message("srcs ${HEADERS}")
 
-file(GLOB_RECURSE SOURCES "src/*.cpp" "src/*.cc" "src/*.c" "src/*.S" "../../protocol/protoconf/server/*.cc")
+file(GLOB_RECURSE SOURCES "*.cpp" "*.cc" "*.c" "*.S" "../../protocol/protoconf/server/*.cc")
 # message("srcs ${SOURCES}")
 
 # grpc protobuf

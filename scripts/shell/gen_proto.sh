@@ -16,6 +16,12 @@ SCRIPTS_DIR=$(dirname "$SHELL_DIR")
 # 获取到工作区路径
 WORKSPACE_DIR=$(dirname "$SCRIPTS_DIR")
 
+# protoc 路径
+PROTC_BIN="protoc"
+PROTC_BIN="${WORKSPACE_DIR}/tools/proto/protoc"
+PROTC_BIN="${WORKSPACE_DIR}/tools/proto/bin/protoc"
+
+
 # 所有proto的文件路径
 PROTO_PATH="protocol/proto/server"
 
@@ -29,12 +35,12 @@ echo "GOLANG Output path: $GOLANG_OUT_PATH"
 
 # 生成grpc.pb.cc/h
 eval "pushd ${WORKSPACE_DIR}/${PROTO_PATH}"
-PROTOC_CMD="protoc --grpc_out=${CPP_OUT_PATH} --plugin=protoc-gen-grpc=`which grpc_cpp_plugin` *.proto"
+PROTOC_CMD="${PROTC_BIN} --grpc_out=${CPP_OUT_PATH} --plugin=protoc-gen-grpc=`which grpc_cpp_plugin` *.proto"
 eval $PROTOC_CMD
 eval "popd"
 
 # 生成pb.xxx
-PROTOC_CMD="protoc --proto_path=${PROTO_PATH} \
+PROTOC_CMD="${PROTC_BIN} --proto_path=${PROTO_PATH} \
             --cpp_out=${CPP_OUT_PATH} \
             --go_out=${GOLANG_OUT_PATH} \
             --go_opt=paths=source_relative \
@@ -42,6 +48,6 @@ PROTOC_CMD="protoc --proto_path=${PROTO_PATH} \
 eval $PROTOC_CMD
 
 # 生成grpc.pb.go
-PROTOC_CMD="protoc --go-grpc_out=${GOLANG_OUT_PATH} ${PROTO_PATH}/*.proto"
+PROTOC_CMD="${PROTC_BIN} --go-grpc_out=${GOLANG_OUT_PATH} ${PROTO_PATH}/*.proto"
 eval $PROTOC_CMD
 

@@ -95,6 +95,7 @@ if(NOT "${_PROTOBUF_PROTOC_EXECUTABLE_VERSION}" VERSION_EQUAL "${Protobuf_VERSIO
     message(WARNING "Protobuf compiler version ${_PROTOBUF_PROTOC_EXECUTABLE_VERSION}"
     " doesn't match library version ${Protobuf_VERSION}")
 endif()
-
+点击这个宏，然后去下载对应版本的protoc即可
+#if PROTOBUF_VERSION != 5026001
 https://github.com/protocolbuffers/protobuf/releases/tag/v3.12.4
 ```

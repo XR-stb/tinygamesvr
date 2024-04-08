@@ -16,6 +16,9 @@ Makefile
 # clangd 缓存
 .cache/
 
+# protoc 可执行程序版本是3.12.4
+protoc
+
 # proto生成的文件
 *.pb.cc
 *.pb.h
