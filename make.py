@@ -40,7 +40,7 @@ class Make:
                 continue
             if target in self.cpp_targets:
                 if self.args.with_cmake:
-                    util.exec_cmd("cmake --build . --target %s" % target)
+                    util.exec_cmd("cmake --build . --target %s -j4" % target)
                 else:
                     util.exec_cmd(
                         "bazel build //servers/%s:%s --symlink_prefix=build/bazel/"

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8...3.28)
-
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # CPP 版本
 set(CMAKE_CXX_STANDARD 17)
 
@@ -25,9 +25,6 @@ message("srcs ${SOURCES}")
 
 # 生成compile_commands.json 给clangd做代码索引提示
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-set(Protobuf_PROTOC_EXECUTABLE "/usr/local/bin/protoc")
-# 添加 gRPC 头文件路径
-include_directories(${_GRPC_CPP_PLUGIN_INCLUDE_DIRS})
 
 # 设置输出目录
 set(CMAKE_BINARY_DIR "build/cmake/servers")
