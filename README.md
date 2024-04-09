@@ -99,3 +99,9 @@ endif()
 #if PROTOBUF_VERSION != 5026001
 https://github.com/protocolbuffers/protobuf/releases/tag/v3.12.4
 ```
+
+关于protoc 生成golang代码可能遇到的问题
+https://stackoverflow.com/questions/57700860/error-protoc-gen-go-program-not-found-or-is-not-executable
+
+8. golang 升级相关
+https://ubuntuhandbook.org/index.php/2024/02/how-to-install-go-golang-1-22-in-ubuntu-22-04/

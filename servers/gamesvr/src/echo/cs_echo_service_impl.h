@@ -10,7 +10,7 @@ using pb::HelloRequest;
 using pb::HelloReply;
 using pb::Greeter;
 
-class GreeterServiceImpl final : public pb::Greeter::Service {
+class GreeterServiceImpl final : public Greeter::Service {
   Status SayHello(ServerContext* context, const HelloRequest* request, HelloReply* reply) override;
 
   Status SayHelloAgain(ServerContext* context, const HelloRequest* request,
