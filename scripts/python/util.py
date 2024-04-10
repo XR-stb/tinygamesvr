@@ -28,7 +28,7 @@ def run_cmd(cmd, need_log=True, shell=True, **kwargs):
 
     return ret_code, stdout.decode('utf-8'), stderr.decode('utf-8')
 
-# 实时打印输出
+# 实时获取子进程信息，打印输出
 def exec_cmd(cmd, need_log=True, shell=True, **kwargs):
     shell_proc = subprocess.Popen(cmd, shell=shell, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, **kwargs)
 
@@ -41,6 +41,21 @@ def exec_cmd(cmd, need_log=True, shell=True, **kwargs):
             log(output.decode('utf-8').strip())
 
     ret_code = shell_proc.poll()
+
+    if need_log:
+        cmd_str = cmd if isinstance(cmd, str) else subprocess.list2cmdline(cmd)
+        if ret_code == 0:
+            log('run cmd success: %s' % cmd_str)
+        else:
+            log('run cmd failed: %s' % cmd_str)
+
+    return ret_code
+
+# 保留原本颜色的终端输出， 需要等子进程结束才能输出信息
+def exec_cmd_with_color(cmd, need_log=True, shell=True, **kwargs):
+    shell_proc = subprocess.Popen(cmd, shell=shell, **kwargs)
+
+    ret_code = shell_proc.wait()
 
     if need_log:
         cmd_str = cmd if isinstance(cmd, str) else subprocess.list2cmdline(cmd)

@@ -105,3 +105,11 @@ https://stackoverflow.com/questions/57700860/error-protoc-gen-go-program-not-fou
 
 8. golang 升级相关
 https://ubuntuhandbook.org/index.php/2024/02/how-to-install-go-golang-1-22-in-ubuntu-22-04/
+
+9. bazel 编译grpc 相关报错 (TODO)
+```shell
+ERROR: no such package '@@bazel_tools//platforms': BUILD file not found in directory 'platforms' of external repository @@bazel_tools. Add a BUILD file to a directory to mark it as a package.
+ERROR: /home/tianbaosha/.cache/bazel/_bazel_tianbaosha/ad16b30a9f26716226dff8300c03eaa4/external/io_bazel_rules_go/go/toolchain/BUILD.bazel:8:20: no such package '@@bazel_tools//platforms': BUILD file not found in directory 'platforms' of external repository @@bazel_tools. Add a BUILD file to a directory to mark it as a package. and referenced by '@@io_bazel_rules_go//go/toolchain:linux'
+ERROR: /home/tianbaosha/cpp_code/tinygamesvr/servers/gamesvr/BUILD:14:10: Analysis failed
+ERROR: Analysis of target '//servers/gamesvr:gamesvr' failed; build aborted
+```

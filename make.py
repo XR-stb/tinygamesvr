@@ -42,7 +42,7 @@ class Make:
                 if self.args.with_cmake:
                     util.exec_cmd("cmake --build . --target %s -j4" % target)
                 else:
-                    util.exec_cmd(
+                    util.exec_cmd_with_color(
                         "bazel build //servers/%s:%s --symlink_prefix=build/bazel/"
                         % (target, target)
                     )
