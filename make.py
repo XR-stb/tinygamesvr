@@ -36,7 +36,7 @@ class Make:
     def build_targets(self, targets):
         for target in targets:
             if target in self.golang_targets:
-                util.exec_cmd("cd golang/cloud && go build -o ../../build/golang ./cmd/%s" % target)
+                util.exec_cmd("cd golang/cloud && go build -o ../../build/golang/ ./cmd/%s" % target)
                 continue
             if target in self.cpp_targets:
                 if self.args.with_cmake:
