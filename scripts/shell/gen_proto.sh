@@ -17,8 +17,8 @@ SCRIPTS_DIR=$(dirname "$SHELL_DIR")
 WORKSPACE_DIR=$(dirname "$SCRIPTS_DIR")
 
 # protoc 路径
-PROTC_BIN="protoc"
-PROTC_BIN="${WORKSPACE_DIR}/tools/proto/protoc"
+# PROTC_BIN="protoc"
+# PROTC_BIN="${WORKSPACE_DIR}/tools/proto/protoc"
 PROTC_BIN="${WORKSPACE_DIR}/tools/proto/bin/protoc"
 
 
@@ -32,6 +32,18 @@ echo "CPP Output path: $CPP_OUT_PATH"
 # go 文件pb.go输出 路径
 GOLANG_OUT_PATH="${WORKSPACE_DIR}/golang/cloud/protoconf/server"
 echo "GOLANG Output path: $GOLANG_OUT_PATH"
+
+# 检查并创建 CPP 输出路径
+if [ ! -d "$CPP_OUT_PATH" ]; then
+    echo "CPP Output path does not exist. Creating..."
+    mkdir -p "$CPP_OUT_PATH"
+fi
+
+# 检查并创建 Golang 输出路径
+if [ ! -d "$GOLANG_OUT_PATH" ]; then
+    echo "Golang Output path does not exist. Creating..."
+    mkdir -p "$GOLANG_OUT_PATH"
+fi
 
 # 生成grpc.pb.cc/h
 eval "pushd ${WORKSPACE_DIR}/${PROTO_PATH}"

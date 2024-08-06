@@ -17,6 +17,29 @@ sudo apt-get upgrade bazel
 sudo apt install cmake
 ```
 
+安装golang
+```
+sudo apt install golang-go
+go version # go version go1.22.2 linux/amd64
+
+# 若golang版本为1.23及以上 可能会出现：invalid go version '1.22.2': must match format 1.23
+# 将go.mod 里面的 go 1.22.2改成 go 1.23
+```
+
+准备grpc-cpp环境: https://grpc.io/docs/languages/cpp/quickstart/
+```
+sudo apt install -y build-essential autoconf libtool pkg-config
+cd grpc
+mkdir -p cmake/build
+pushd cmake/build
+cmake -DgRPC_INSTALL=ON \
+      -DgRPC_BUILD_TESTS=OFF \
+      -DCMAKE_INSTALL_PREFIX=$MY_INSTALL_DIR \
+      ../..
+make -j 4
+make install # permision denied 则使用 sudo make install
+```
+
 ### 2. 编译和运行（更方便的做法是使用./make.py脚本，见下方）
 使用bazel
 ```shell
@@ -53,12 +76,17 @@ chmod +x ./make.py
 
 编译
 ```shell
-./make.py build # 编译全部
+./make.py build # 编译全部target
+./make.py run # 运行全部target
+
 ./make.py build gamesvr # 编译单个服务
 ./make.py build gamesvr chatsvr # 编译多个服务
 
 # cpp target 默认使用bazel编译，使用cmake编译如下
 ./make.py build gamesvr --with-cmake
+
+# 生成proto代码文件
+./make.py genproto
 ```
 
 ### 开发环境配置
@@ -69,7 +97,7 @@ sudo apt install clangd
 clangd --version # version >= 14即可
 ```
 2. 安装vscode clangd 插件，卸载vscode 微软 c++ 插件
-3. 安装clang-format，包括vscode插件
+3. 安装clang-format，包括vscode插件(作者：Xaver Hellauer)
 ```shell
 sudo apt install clang-format
 ```
@@ -98,6 +126,11 @@ endif()
 点击这个宏，然后去下载对应版本的protoc即可
 #if PROTOBUF_VERSION != 5026001
 https://github.com/protocolbuffers/protobuf/releases/tag/v3.12.4
+
+# 本项目使用的是以下版本
+wget https://github.com/protocolbuffers/protobuf/releases/download/v3.12.4/protoc-3.12.4-linux-x86_64.zip
+mv protoc-3.12.4-linux-x86_64.zip tinygamesvr/tools/proto && cd tinygamesvr/tools/proto
+unzip protoc-3.12.4-linux-x86_64.zip
 ```
 
 关于protoc 生成golang代码可能遇到的问题
@@ -112,4 +145,8 @@ ERROR: no such package '@@bazel_tools//platforms': BUILD file not found in direc
 ERROR: /home/tianbaosha/.cache/bazel/_bazel_tianbaosha/ad16b30a9f26716226dff8300c03eaa4/external/io_bazel_rules_go/go/toolchain/BUILD.bazel:8:20: no such package '@@bazel_tools//platforms': BUILD file not found in directory 'platforms' of external repository @@bazel_tools. Add a BUILD file to a directory to mark it as a package. and referenced by '@@io_bazel_rules_go//go/toolchain:linux'
 ERROR: /home/tianbaosha/cpp_code/tinygamesvr/servers/gamesvr/BUILD:14:10: Analysis failed
 ERROR: Analysis of target '//servers/gamesvr:gamesvr' failed; build aborted
+```
+
+10. 编译cpp target 报错：fatal error: google/protobuf/generated_message_table_driven.h: No such file or directory
+```
 ```
