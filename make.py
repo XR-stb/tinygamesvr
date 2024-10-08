@@ -70,11 +70,13 @@ class Make:
 
                 if self.args.with_cmake:
                     util.exec_cmd("./build/cmake/servers/%s/%s" % (target, target))
-                else:
+                elif self.args.with_bazel:
                     util.exec_cmd(
                         "bazel run //servers/%s:%s --symlink_prefix=build/bazel/"
                         % (target, target)
                     )
+                else:
+                    raise Exception("unknown build tools")
 
     def _genproto_(self):
         util.exec_cmd("bash ./scripts/shell/gen_proto.sh")
@@ -104,7 +106,13 @@ def parse_args():
     build_parser.add_argument(
         "--with-cmake", # NOTE(tianbaosha): 这里使用了 - 不过在代码中读取变量使用下划线_
         action="store_true",
-        help="choose build system, default is bazel",
+        default=True,
+        help="choose build system, default is cmake",
+    )
+    build_parser.add_argument(
+        "--with-bazel",
+        action="store_true",
+        help="choose build system, use bazel",
     )
 
     run_parser = subparsers.add_parser("run", help="run a target")
@@ -121,7 +129,13 @@ def parse_args():
     run_parser.add_argument(
         "--with-cmake",
         action="store_true",
-        help="run server, default run bazel compile bin",
+        default=True,
+        help="run server, default run cmake compile bin",
+    )
+    run_parser.add_argument(
+        "--with-bazel",
+        action="store_true",
+        help="run server, run bazel compile bin",
     )
 
     proto_parser = subparsers.add_parser("genproto", help="gen proto")

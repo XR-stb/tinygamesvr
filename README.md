@@ -82,8 +82,8 @@ chmod +x ./make.py
 ./make.py build gamesvr # 编译单个服务
 ./make.py build gamesvr chatsvr # 编译多个服务
 
-# cpp target 默认使用bazel编译，使用cmake编译如下
-./make.py build gamesvr --with-cmake
+# cpp target 默认使用cmake编译，使用bazle编译如下
+./make.py build gamesvr --with-bazel
 
 # 生成proto代码文件
 ./make.py genproto
