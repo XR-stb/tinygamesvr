@@ -24,7 +24,7 @@
 	 "time"
 	 "fmt"
  
-	 pb "cloud/proto_gen/server";
+	 pb "cloud/proto_gen/server"
  
 	 "google.golang.org/grpc"
  )
