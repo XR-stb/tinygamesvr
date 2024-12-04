@@ -3,6 +3,10 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # CPP 版本
 set(CMAKE_CXX_STANDARD 17)
 
+# compile tool
+set(CMAKE_C_COMPILER "clang")
+set(CMAKE_CXX_COMPILER "clang++")
+
 # 项目名
 project(tinygamesvr)
 
@@ -16,10 +20,10 @@ include_directories(
 
 # 搜索所有头文件和cpp文件，并打印出来
 file(GLOB_RECURSE HEADERS "*.h")
-message("srcs ${HEADERS}")
+# message("srcs ${HEADERS}")
 
 file(GLOB_RECURSE SOURCES "*.cpp" "*.cc" "*.c" "*.S")
-message("srcs ${SOURCES}")
+# message("srcs ${SOURCES}")
 
 # add_executable(${PROJECT_NAME} ${HEADERS} ${SOURCES})
 

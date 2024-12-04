@@ -1,7 +1,7 @@
 #pragma once
 
-#include "protocol/protoconf/server/cs_hello.pb.h"
-#include "protocol/protoconf/server/cs_hello.grpc.pb.h"
+#include "protocol/proto_gen/server/cs_hello.pb.h"
+#include "protocol/proto_gen/server/cs_hello.grpc.pb.h"
 
 using grpc::Status;
 using grpc::ServerContext;

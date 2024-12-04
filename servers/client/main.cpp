@@ -24,12 +24,12 @@
 
 #include "absl/flags/flag.h"
 #include "absl/flags/parse.h"
-#include "protocol/protoconf/server/cs_hello.grpc.pb.h"
+#include "protocol/proto_gen/server/cs_hello.grpc.pb.h"
 
 #ifdef BAZEL_BUILD
-#include "protocol/protoconf/server/cs_hello.pb.h"
+#include "protocol/proto_gen/server/cs_hello.pb.h"
 #else
-#include "protocol/protoconf/server/cs_hello.pb.h"
+#include "protocol/proto_gen/server/cs_hello.pb.h"
 #endif
 
 using grpc::Channel;

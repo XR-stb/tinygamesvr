@@ -4,10 +4,10 @@ project(client)
 set(CMAKE_CXX_STANDARD 17)
 
 # 搜索所有头文件和cpp文件，并打印出来
-file(GLOB_RECURSE HEADERS "*.h" "../../protocol/protoconf/server/*.h")
+file(GLOB_RECURSE HEADERS "*.h" "../../protocol/proto_gen/server/*.h")
 # message("srcs ${HEADERS}")
 
-file(GLOB_RECURSE SOURCES "*.cpp" "*.cc" "*.c" "*.S" "../../protocol/protoconf/server/*.cc")
+file(GLOB_RECURSE SOURCES "*.cpp" "*.cc" "*.c" "*.S" "../../protocol/proto_gen/server/*.cc")
 # message("srcs ${SOURCES}")
 
 # grpc protobuf

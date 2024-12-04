@@ -113,7 +113,10 @@ see: https://grpc.io/docs/languages/go/quickstart/
 ```shell 
 go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.28
 go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.2
-export PATH="$PATH:$(go env GOPATH)/bin"
+
+vi ~/.bashrc 
+export PATH="$PATH:$(go env GOPATH)/bin" # 添加到末尾
+source ~/.bashrc
 ```
 
 7. 安装对应的protoc 版本
@@ -125,12 +128,15 @@ if(NOT "${_PROTOBUF_PROTOC_EXECUTABLE_VERSION}" VERSION_EQUAL "${Protobuf_VERSIO
 endif()
 点击这个宏，然后去下载对应版本的protoc即可
 #if PROTOBUF_VERSION != 5026001
-https://github.com/protocolbuffers/protobuf/releases/tag/v3.12.4
+https://github.com/protocolbuffers/protobuf/releases/
+其中protoc生成的 xx pb.h 中的版本号是 protoc的版本，由于我们已经安装了grpc，所以根据grpc的版本来安装
+点击xx pb.h文件中的这个宏，到grpc安装的那个目录看看版本是多少安装即可
+
 
 # 本项目使用的是以下版本
-wget https://github.com/protocolbuffers/protobuf/releases/download/v3.12.4/protoc-3.12.4-linux-x86_64.zip
-mv protoc-3.12.4-linux-x86_64.zip tinygamesvr/tools/proto && cd tinygamesvr/tools/proto
-unzip protoc-3.12.4-linux-x86_64.zip
+wget https://github.com/protocolbuffers/protobuf/releases/download/v29.0/protoc-29.0-linux-x86_64.zip
+mv protoc-29.0-linux-x86_64.zip tinygamesvr/tools/proto && cd tinygamesvr/tools/proto
+unzip protoc-29.0-linux-x86_64.zip
 ```
 
 关于protoc 生成golang代码可能遇到的问题
@@ -149,4 +155,9 @@ ERROR: Analysis of target '//servers/gamesvr:gamesvr' failed; build aborted
 
 10. 编译cpp target 报错：fatal error: google/protobuf/generated_message_table_driven.h: No such file or directory
 ```
+未安装grpc
+https://grpc.io/docs/languages/cpp/quickstart/
+记得执行到最后的make install
 ```
+11.  undefined reference to `absl::xxxx
+同样是grpc 安装有异常，重新完整走一遍安装流程

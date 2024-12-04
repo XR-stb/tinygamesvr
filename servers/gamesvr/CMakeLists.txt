@@ -4,10 +4,10 @@ project(gamesvr)
 set(CMAKE_CXX_STANDARD 17)
 
 # 搜索所有头文件和cpp文件，并打印出来
-file(GLOB_RECURSE HEADERS "src/*.h" "../../protocol/protoconf/server/*.h")
+file(GLOB_RECURSE HEADERS "src/*.h" "../../protocol/proto_gen/server/*.h")
 # message("srcs ${HEADERS}")
 
-file(GLOB_RECURSE SOURCES "src/*.cpp" "src/*.cc" "src/*.c" "src/*.S" "../../protocol/protoconf/server/*.cc")
+file(GLOB_RECURSE SOURCES "src/*.cpp" "src/*.cc" "src/*.c" "src/*.S" "../../protocol/proto_gen/server/*.cc")
 # message("srcs ${SOURCES}")
 
 # grpc protobuf

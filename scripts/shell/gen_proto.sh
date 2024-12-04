@@ -4,8 +4,8 @@
 # --cpp_out 是相对于当前运行protoc命令的位置，用于指定生成的cpp代码位置，可用绝对路径
 # 生成出来的文件，路径会带上protoc 执行前相对于 proto文件的路径
 # 如 有 home/gamesvr/proto/a.proto
-# 若在 gamesvr 下执行 protoc 则需要指定proto路径 proto/*.proto 然后指定生成位置为home/gamesvr/protoconf/
-# 则最终生成出来的路径为home/gamesvr/protoconf/proto/a.pb.cc 等，需要我们一定是在当前proto目录执行protoc命令最好
+# 若在 gamesvr 下执行 protoc 则需要指定proto路径 proto/*.proto 然后指定生成位置为home/gamesvr/proto_gen/
+# 则最终生成出来的路径为home/gamesvr/proto_gen/proto/a.pb.cc 等，需要我们一定是在当前proto目录执行protoc命令最好
 # 这样就比较容易控制生成的文件位置
 
 # 获取当前sh文件的完整路径
@@ -26,11 +26,11 @@ PROTC_BIN="${WORKSPACE_DIR}/tools/proto/bin/protoc"
 PROTO_PATH="protocol/proto/server"
 
 # cpp 文件pb.c/pb.h输出 路径
-CPP_OUT_PATH="${WORKSPACE_DIR}/protocol/protoconf/server"
+CPP_OUT_PATH="${WORKSPACE_DIR}/protocol/proto_gen/server"
 echo "CPP Output path: $CPP_OUT_PATH"
 
 # go 文件pb.go输出 路径
-GOLANG_OUT_PATH="${WORKSPACE_DIR}/golang/cloud/protoconf/server"
+GOLANG_OUT_PATH="${WORKSPACE_DIR}/golang/cloud/proto_gen/server"
 echo "GOLANG Output path: $GOLANG_OUT_PATH"
 
 # 检查并创建 CPP 输出路径
