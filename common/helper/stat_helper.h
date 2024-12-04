@@ -1,6 +1,7 @@
 #pragma once
 
 #include <common/marco/marco.h>
+#include <limits>
 
 namespace PROJ_NS {
 class CountStat {

@@ -27,6 +27,7 @@ go version # go version go1.22.2 linux/amd64
 ```
 
 准备grpc-cpp环境: https://grpc.io/docs/languages/cpp/quickstart/
+note: grpc version v1.40.0
 ```
 sudo apt install -y build-essential autoconf libtool pkg-config
 cd grpc

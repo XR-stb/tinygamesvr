@@ -23,3 +23,6 @@ protoc
 *.pb.cc
 *.pb.h
 *.pb.go
+
+# bazel
+MODULE.bazel.lock

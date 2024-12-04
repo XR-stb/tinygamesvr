@@ -39,13 +39,13 @@ class Make:
                 util.exec_cmd("cd golang/cloud && go build -o ../../build/golang/ ./cmd/%s" % target)
                 continue
             if target in self.cpp_targets:
-                if self.args.with_cmake:
-                    util.exec_cmd("cmake --build . --target %s -j4" % target)
-                else:
+                if self.args.with_bazel:
                     util.exec_cmd_with_color(
                         "bazel build //servers/%s:%s --symlink_prefix=build/bazel/"
                         % (target, target)
                     )
+                else:
+                    util.exec_cmd("cmake --build . --target %s -j4" % target)
                 continue
             raise Exception("unkown tartget: %s" % target)
         
@@ -68,13 +68,13 @@ class Make:
                     util.exec_cmd("./build/golang/%s" % target)
                     continue
 
-                if self.args.with_cmake:
-                    util.exec_cmd("./build/cmake/servers/%s/%s" % (target, target))
-                elif self.args.with_bazel:
+                if self.args.with_bazel:
                     util.exec_cmd(
                         "bazel run //servers/%s:%s --symlink_prefix=build/bazel/"
                         % (target, target)
                     )
+                elif self.args.with_cmake:
+                    util.exec_cmd("./build/cmake/servers/%s/%s" % (target, target))
                 else:
                     raise Exception("unknown build tools")
 
