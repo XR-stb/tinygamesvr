@@ -2,17 +2,27 @@ syntax = "proto3";
 
 package pb;
 
+import "code.proto";
+
 option go_package = ".;protocol";
 
 service Greeter {
-  rpc SayHello(HelloRequest) returns (HelloReply) {}
-  rpc SayHelloAgain(HelloRequest) returns (HelloReply) {}
+  rpc SayHello(CSReqHello) returns (CSResHello) {}
+  rpc SendChat(CSReqSendChat) returns (CSResSendChat) {}
 }
 
-message HelloRequest {
-  string name = 1;
+message CSReqHello {
+  optional string name = 1;
 }
 
-message HelloReply {
-  string message = 1;
+message CSResHello {
+  optional string message = 1;
+}
+
+message CSReqSendChat {
+  optional string msg = 1;
+}
+
+message CSResSendChat {
+  optional Code ret = 1;
 }

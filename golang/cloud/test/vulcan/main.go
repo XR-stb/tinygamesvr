@@ -6,15 +6,22 @@ import (
 	"log"
 	"time"
 
-	"google.golang.org/grpc"
 	pb "cloud/proto_gen/server"
+
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 )
 
 func main() {
-	// 连接到 gRPC 服务器
-	conn, err := grpc.Dial("localhost:50051", grpc.WithInsecure(), grpc.WithBlock(), grpc.WithTimeout(5*time.Second))
+	// Create a context with a timeout
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel() // Ensure the context is cancelled to free resources
+
+	// Use DialContext instead of Dial
+	conn, err := grpc.DialContext(ctx, "localhost:50051", grpc.WithTransportCredentials(insecure.NewCredentials())) // Use grpc.WithInsecure() if not using TLS
 	if err != nil {
-		log.Fatalf("did not connect: %v", err)
+		fmt.Printf("err: %v\n", err)
+		return
 	}
 	defer conn.Close()
 
@@ -23,11 +30,11 @@ func main() {
 
 	// 准备请求
 	user := "world"
-	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+	ctx, cancel = context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
 
 	// 调用 SayHello 方法
-	reply, err := client.SayHello(ctx, &pb.HelloRequest{Name: user})
+	reply, err := client.SayHello(ctx, &pb.CSReqHello{Name: &user})
 	if err != nil {
 		log.Fatalf("could not greet: %v", err)
 	}

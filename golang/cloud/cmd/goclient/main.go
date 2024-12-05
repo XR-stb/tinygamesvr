@@ -16,41 +16,42 @@
  *
  */
 
- package main
+package main
 
- import (
-	 "context"
-	 "log"
-	 "time"
-	 "fmt"
- 
-	 pb "cloud/proto_gen/server"
- 
-	 "google.golang.org/grpc"
- )
- 
- const (
-	 address     = "localhost:50051"
-	 defaultName = "world"
- )
- 
- func main() {
+import (
+	"context"
+	"fmt"
+	"log"
+	"time"
+
+	pb "cloud/proto_gen/server"
+
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
+)
+
+const (
+	address     = "localhost:50051"
+	defaultName = "world"
+)
+
+func main() {
 	fmt.Println("hello")
-	 // Set up a connection to the server.
-	 conn, err := grpc.Dial(address, grpc.WithInsecure(), grpc.WithBlock())
-	 if err != nil {
+	// Set up a connection to the server.
+	conn, err := grpc.Dial(address, grpc.WithTransportCredentials(insecure.NewCredentials()), grpc.WithBlock())
+	if err != nil {
 		log.Fatalf("did not connect: %v", err)
-	 }
-	 defer conn.Close()
-	 c := pb.NewGreeterClient(conn)
- 
-	 // Contact the server and print out its response.
-	 name := defaultName
-	 ctx, cancel := context.WithTimeout(context.Background(), time.Second)
-	 defer cancel()
-	 r, err := c.SayHello(ctx, &pb.HelloRequest{Name: name})
-	 if err != nil {
-		 log.Fatalf("could not greet: %v", err)
-	 }
-	 log.Printf("Greeting: %s", r.GetMessage())
- }
+	}
+	defer conn.Close()
+	c := pb.NewGreeterClient(conn)
+
+	// Contact the server and print out its response.
+	name := defaultName
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+	defer cancel()
+	r, err := c.SayHello(ctx, &pb.CSReqHello{Name: &name})
+	if err != nil {
+		log.Fatalf("could not greet: %v", err)
+	}
+	log.Printf("Greeting: %s", r.GetMessage())
+}

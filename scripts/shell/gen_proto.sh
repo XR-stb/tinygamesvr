@@ -21,7 +21,6 @@ WORKSPACE_DIR=$(dirname "$SCRIPTS_DIR")
 # PROTC_BIN="${WORKSPACE_DIR}/tools/proto/protoc"
 PROTC_BIN="${WORKSPACE_DIR}/tools/proto/bin/protoc"
 
-
 # 所有proto的文件路径
 PROTO_PATH="protocol/proto/server"
 
@@ -47,7 +46,7 @@ fi
 
 # 生成grpc.pb.cc/h
 eval "pushd ${WORKSPACE_DIR}/${PROTO_PATH}"
-PROTOC_CMD="${PROTC_BIN} --grpc_out=${CPP_OUT_PATH} --plugin=protoc-gen-grpc=`which grpc_cpp_plugin` *.proto"
+PROTOC_CMD="${PROTC_BIN} --grpc_out=${CPP_OUT_PATH} --plugin=protoc-gen-grpc=$(which grpc_cpp_plugin) *.proto"
 eval $PROTOC_CMD
 eval "popd"
 
@@ -60,6 +59,8 @@ PROTOC_CMD="${PROTC_BIN} --proto_path=${PROTO_PATH} \
 eval $PROTOC_CMD
 
 # 生成grpc.pb.go
-PROTOC_CMD="${PROTC_BIN} --go-grpc_out=${GOLANG_OUT_PATH} ${PROTO_PATH}/*.proto"
-eval $PROTOC_CMD
-
+PROTOC_CMD="${PROTC_BIN} \
+            --go-grpc_out=${GOLANG_OUT_PATH} \
+            --go-grpc_opt=paths=source_relative \ # 使用相对路径去查找proto
+            ${PROTO_PATH}/*.proto" \
+    eval $PROTOC_CMD

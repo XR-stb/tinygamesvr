@@ -1,6 +1,7 @@
 ## QuickStart
 ```
 git clone --recursive https://github.com/XR-stb/tinygamesvr
+# 如果clone子模块失败，可以再慢慢尝试 git submodule update --init --recursive
 cd tinygamesvr/third_party/grpc
 # install grpc, see this https://grpc.io/docs/languages/cpp/quickstart/
 

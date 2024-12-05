@@ -31,18 +31,18 @@ using grpc::Channel;
 using grpc::ClientContext;
 using grpc::Status;
 using pb::Greeter;
-using pb::HelloReply;
-using pb::HelloRequest;
+using pb::CSReqHello;
+using pb::CSResHello;
 
 class GreeterClient {
  public:
   GreeterClient(std::shared_ptr<Channel> channel) : stub_(Greeter::NewStub(channel)) {}
 
   std::string SayHello(const std::string& user) {
-    HelloRequest request;
+    CSReqHello request;
     request.set_name(user);
 
-    HelloReply reply;
+    CSResHello reply;
     ClientContext context;
     Status status = stub_->SayHello(&context, request, &reply);
 

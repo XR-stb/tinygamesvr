@@ -34,6 +34,13 @@
         },
         "[cpp]": {
             "editor.defaultFormatter": "xaver.clang-format"
+        },
+        "editor.formatOnSave": true,
+        "protoc": {
+            "path": "${workspaceRoot}/tools/proto/bin/protoc",
+            "options": [
+                "--proto_path=${workspaceRoot}/protocol/proto/server"
+            ]
         }
     },
 }

@@ -1,11 +1,26 @@
 cmake_minimum_required(VERSION 2.8...3.28)
+# 项目名
+# project(tinygamesvr) # 写在这里会报链接错误
+
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # CPP 版本
 set(CMAKE_CXX_STANDARD 17)
 
-# compile tool
-set(CMAKE_C_COMPILER "clang")
-set(CMAKE_CXX_COMPILER "clang++")
+find_program(CLANG_COMPILER NAMES clang clang++)
+find_program(GCC_COMPILER NAMES gcc g++)
+
+# 优先使用clang, 没有就使用gcc
+if(CLANG_COMPILER)
+    message(STATUS "Using Clang compiler: ${CLANG_COMPILER}")
+    set(CMAKE_C_COMPILER ${CLANG_COMPILER})
+    set(CMAKE_CXX_COMPILER ${CLANG_COMPILER})
+elseif(GCC_COMPILER)
+    message(STATUS "Using GCC compiler: ${GCC_COMPILER}")
+    set(CMAKE_C_COMPILER ${GCC_COMPILER})
+    set(CMAKE_CXX_COMPILER ${GCC_COMPILER})
+else()
+    message(FATAL_ERROR "No suitable compiler found. Please install Clang or GCC.")
+endif()
 
 # 项目名
 project(tinygamesvr)

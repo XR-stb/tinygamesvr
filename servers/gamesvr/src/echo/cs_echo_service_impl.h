@@ -2,17 +2,11 @@
 
 #include "protocol/proto_gen/server/cs_hello.pb.h"
 #include "protocol/proto_gen/server/cs_hello.grpc.pb.h"
+#include "common/framework/rpc_common.h"
 
-using grpc::Status;
-using grpc::ServerContext;
-
-using pb::HelloRequest;
-using pb::HelloReply;
-using pb::Greeter;
-
-class GreeterServiceImpl final : public Greeter::Service {
-  Status SayHello(ServerContext* context, const HelloRequest* request, HelloReply* reply) override;
-
-  Status SayHelloAgain(ServerContext* context, const HelloRequest* request,
-                       HelloReply* reply) override;
+namespace PROJ_NS {
+class GreeterServiceImpl final : public pb::Greeter::Service {
+  DECLARE_SERVICE_METHOD(SayHello, CSReqHello, CSResHello);
+  DECLARE_SERVICE_METHOD(SendChat, CSReqSendChat, CSResSendChat);
 };
+}
