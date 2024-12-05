@@ -15,11 +15,14 @@ try:
 except:
     pass
 
+
 def get_cpp_servers():
     return util.get_directories("./servers/")
 
+
 def get_golang_servers():
     return util.get_directories("./golang/cloud/cmd/")
+
 
 class Make:
     def __init__(self, args):
@@ -36,7 +39,10 @@ class Make:
     def build_targets(self, targets):
         for target in targets:
             if target in self.golang_targets:
-                util.exec_cmd("cd golang/cloud && go build -o ../../build/golang/ ./cmd/%s" % target)
+                util.exec_cmd(
+                    "cd golang/cloud && go build -o ../../build/golang/ ./cmd/%s"
+                    % target
+                )
                 continue
             if target in self.cpp_targets:
                 if self.args.with_bazel:
@@ -48,7 +54,7 @@ class Make:
                     util.exec_cmd("cmake --build . --target %s -j4" % target)
                 continue
             raise Exception("unkown tartget: %s" % target)
-        
+
     def _build_(self):
         targets = self.args.targets
         if targets == "all" or targets == ["all"]:
@@ -104,7 +110,7 @@ def parse_args():
         choices=["all"] + get_cpp_servers() + get_golang_servers(),
     )
     build_parser.add_argument(
-        "--with-cmake", # NOTE(tianbaosha): 这里使用了 - 不过在代码中读取变量使用下划线_
+        "--with-cmake",  # NOTE(tianbaosha): 这里使用了 - 不过在代码中读取变量使用下划线_
         action="store_true",
         default=True,
         help="choose build system, default is cmake",

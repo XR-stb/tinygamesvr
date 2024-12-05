@@ -162,3 +162,12 @@ https://grpc.io/docs/languages/cpp/quickstart/
 ```
 11.  undefined reference to `absl::xxxx
 同样是grpc 安装有异常，重新完整走一遍安装流程
+
+12. 安装python black 插件 格式化python代码
+```
+python3 -m venv .pyenv #  Linux 发行版（如 Ubuntu）中，系统的 Python 环境 不能 直接安装包
+pip install black
+source .pyenv/bin/activate
+pip install black
+black . # 格式化当前目录
+```
