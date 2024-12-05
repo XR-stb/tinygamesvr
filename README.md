@@ -1,3 +1,17 @@
+## QuickStart
+```
+git clone --recursive https://github.com/XR-stb/tinygamesvr
+cd tinygamesvr/third_party/grpc
+# install grpc, see this https://grpc.io/docs/languages/cpp/quickstart/
+
+./make genproto # 生成proto文件
+./make build gamesvr # 编译gamesvr
+./make run gamesvr # 运行gamesvr
+
+cd golang/cloud
+go run ./test/vulcan # run test client
+```
+
 ## Build
 
 ### 1. 安装构建工具
