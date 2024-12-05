@@ -7,6 +7,9 @@ sudo systemctl start redis-server
 sudo systemctl restart redis-server # 修改密码后需restart
 sudo systemctl status redis-server # 查看redis status
 sudo systemctl enable redis-server # 设置开机自启
+
+redis-cli # 终端访问
+auth 123456 # 密码设置为123456，所以用这个密码登录
 ```
 
 准备cpp-redis环境

@@ -26,3 +26,6 @@ MODULE.bazel.lock
 
 # python 
 .pyenv
+
+# vscode
+.vscode/

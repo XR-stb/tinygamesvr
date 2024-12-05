@@ -55,12 +55,15 @@ PROTOC_CMD="${PROTC_BIN} --proto_path=${PROTO_PATH} \
             --cpp_out=${CPP_OUT_PATH} \
             --go_out=${GOLANG_OUT_PATH} \
             --go_opt=paths=source_relative \
+            --go-grpc_out=${GOLANG_OUT_PATH} \
+            --go-grpc_opt=paths=source_relative \
             ${PROTO_PATH}/*.proto"
 eval $PROTOC_CMD
 
-# 生成grpc.pb.go
-PROTOC_CMD="${PROTC_BIN} \
-            --go-grpc_out=${GOLANG_OUT_PATH} \
-            --go-grpc_opt=paths=source_relative \ # 使用相对路径去查找proto
-            ${PROTO_PATH}/*.proto" \
-    eval $PROTOC_CMD
+# # 生成grpc.pb.go 
+# # --go-grpc_opt=paths=source_relative 使用相对路径去查找proto
+# PROTOC_CMD="${PROTC_BIN} \
+#             --go-grpc_out=${GOLANG_OUT_PATH} \
+#             --go-grpc_opt=paths=source_relative \
+#             ${PROTO_PATH}/*.proto"
+# eval $PROTOC_CMD

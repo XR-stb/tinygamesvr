@@ -22,4 +22,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE ${gRPC_INCLUDE_DIRS})
 
 # 添加 gRPC 和 Protobuf 的库
 target_link_libraries(${PROJECT_NAME} PRIVATE ${Protobuf_LIBRARIES})
-target_link_libraries(${PROJECT_NAME} PRIVATE gRPC::grpc++ gRPC::grpc++_reflection)
+target_link_libraries(${PROJECT_NAME} PRIVATE gRPC::grpc++ gRPC::grpc++_reflection cpp_redis tacopie)
+
+# 添加cpp_redis 所需库
+target_link_libraries(${PROJECT_NAME} PRIVATE cpp_redis tacopie)

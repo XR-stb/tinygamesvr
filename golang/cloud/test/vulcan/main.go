@@ -40,5 +40,15 @@ func main() {
 	}
 
 	// 打印响应
-	fmt.Printf("Greeter received: %s\n", reply.Message)
+	fmt.Printf("Greeter received: %s\n", reply.GetMessage())
+
+	// 调用 SayHello 方法
+	msg := "hello every chat"
+	res, err := client.SendChat(ctx, &pb.CSReqSendChat{Msg: &msg})
+	if err != nil {
+		log.Fatalf("could not greet: %v", err)
+	}
+
+	// 打印响应
+	fmt.Printf("send chat ret: %v\n", res.Ret)
 }
