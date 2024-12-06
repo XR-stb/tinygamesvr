@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package pb;
+
+import "code.proto";
+
+option go_package = ".;protocol";
+
+service Chat {
+  rpc SendChat(SSReqSendChat) returns (SSResSendChat) {}
+}
+
+message SSReqSendChat {
+  string user_id = 1;
+  string msg = 2;
+}
+
+message SSResSendChat {
+  Code ret = 1;
+}

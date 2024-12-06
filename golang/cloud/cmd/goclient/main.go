@@ -49,7 +49,7 @@ func main() {
 	name := defaultName
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
-	r, err := c.SayHello(ctx, &pb.CSReqHello{Name: &name})
+	r, err := c.SayHello(ctx, &pb.CSReqHello{Name: name})
 	if err != nil {
 		log.Fatalf("could not greet: %v", err)
 	}

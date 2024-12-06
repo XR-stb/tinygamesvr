@@ -33,7 +33,7 @@
             "editor.defaultFormatter": "ms-python.black-formatter"
         },
         "[cpp]": {
-            "editor.defaultFormatter": "xaver.clang-format"
+            "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd"
         },
         "editor.formatOnSave": true,
         "protoc": {
