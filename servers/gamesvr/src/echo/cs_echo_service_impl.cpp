@@ -4,7 +4,6 @@
 
 #include <cpp_redis/cpp_redis>
 
-#include "chat_logic.h"
 #include "protocol/proto_gen/server/ss_chat.grpc.pb.h"
 #include "protocol/proto_gen/server/ss_chat.pb.h"
 
