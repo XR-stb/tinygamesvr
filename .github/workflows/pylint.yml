@@ -22,7 +22,7 @@ jobs:
       id: changed-files
       run: |
         git fetch origin
-        git diff --name-only origin/main...HEAD > changed_files.txt
+        git diff --name-only origin/master...HEAD > changed_files.txt
     - name: Analysing the code with Black
       run: |
         if [ -s changed_files.txt ]; then
