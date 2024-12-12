@@ -52,7 +52,12 @@ set(CMAKE_BINARY_DIR "build/cmake/servers")
 file(GLOB SERVICE_DIRS RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}/servers ${CMAKE_CURRENT_SOURCE_DIR}/servers/*)
 foreach(SERVICE_DIR IN LISTS SERVICE_DIRS)
     if(IS_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/servers/${SERVICE_DIR})
-        message(${CMAKE_BINARY_DIR}/${SERVICE_DIR}/)
+        # message(${CMAKE_BINARY_DIR}/${SERVICE_DIR}/)
         add_subdirectory(servers/${SERVICE_DIR} ${CMAKE_BINARY_DIR}/${SERVICE_DIR}/)
     endif()
 endforeach()
+
+# 添加测试目录
+set(CMAKE_TESTS_BINARY_DIR "build/cmake/")
+set(GOOGLE_TESTS_SUB_DIR "tests/")
+add_subdirectory(tests ${CMAKE_TESTS_BINARY_DIR}/${GOOGLE_TESTS_SUB_DIR})

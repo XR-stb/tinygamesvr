@@ -1,6 +1,4 @@
-#include "ss_chat_service_impl.h"
-
-#include <grpcpp/support/status.h>
+#include <gtest/gtest.h>
 
 #include <bsoncxx/builder/stream/document.hpp>
 #include <bsoncxx/json.hpp>
@@ -8,12 +6,7 @@
 #include <mongocxx/instance.hpp>
 #include <mongocxx/uri.hpp>
 
-namespace PROJ_NS {
-IMPLEMENT_SERVICE_METHOD(ChatServiceImpl, SendChat, SSReqSendChat, SSResSendChat) {
-  std::cout << "chat svr recive:" << "\n"
-            << "msg: " << req->msg() << "\n"
-            << "user_id: " << req->user_id() << std::endl;
-
+TEST(MongoDBTest, ConnectTest) {
   // 初始化 MongoDB 驱动
   mongocxx::instance instance{};
 
@@ -35,6 +28,6 @@ IMPLEMENT_SERVICE_METHOD(ChatServiceImpl, SendChat, SSReqSendChat, SSResSendChat
     std::cout << bsoncxx::to_json(doc) << std::endl;
   }
 
-  return grpc::Status::OK;
+  // 删除 恢复原状
+  collection.delete_one(document.view());
 }
-}  // namespace PROJ_NS

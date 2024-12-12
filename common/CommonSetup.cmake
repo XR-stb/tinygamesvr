@@ -30,17 +30,23 @@ endforeach()
 # grpc protobuf
 find_package(Protobuf CONFIG REQUIRED)
 find_package(gRPC CONFIG REQUIRED)
+# find_package(mongocxx REQUIRED)
+# find_package(bsoncxx REQUIRED)
 
 # 添加可执行文件
 add_executable(${PROJECT_NAME} ${HEADERS} ${SOURCES})
 
 # 添加 gRPC 和 Protobuf 的头文件路径
-target_include_directories(${PROJECT_NAME} PRIVATE ${Protobuf_INCLUDE_DIRS})
-target_include_directories(${PROJECT_NAME} PRIVATE ${gRPC_INCLUDE_DIRS})
+target_include_directories(${PROJECT_NAME} PUBLIC ${Protobuf_INCLUDE_DIRS})
+target_include_directories(${PROJECT_NAME} PUBLIC ${gRPC_INCLUDE_DIRS})
 
 # 添加 gRPC 和 Protobuf 的库
-target_link_libraries(${PROJECT_NAME} PRIVATE ${Protobuf_LIBRARIES})
-target_link_libraries(${PROJECT_NAME} PRIVATE gRPC::grpc++ gRPC::grpc++_reflection cpp_redis tacopie)
+target_link_libraries(${PROJECT_NAME} PUBLIC ${Protobuf_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} PUBLIC gRPC::grpc++ gRPC::grpc++_reflection cpp_redis tacopie)
 
 # 添加cpp_redis 所需库
-target_link_libraries(${PROJECT_NAME} PRIVATE cpp_redis tacopie)
+target_link_libraries(${PROJECT_NAME} PUBLIC cpp_redis tacopie)
+
+# 链接 mongocxx 和 bsoncxx 库
+target_link_libraries(${PROJECT_NAME} PUBLIC mongocxx bsoncxx)
+

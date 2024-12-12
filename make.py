@@ -15,9 +15,10 @@ try:
 except:
     pass
 
+test_targets = ["test_main"]
 
 def get_cpp_servers():
-    return util.get_directories("./servers/")
+    return test_targets + util.get_directories("./servers/")
 
 
 def get_golang_servers():
@@ -70,9 +71,13 @@ class Make:
 
         else:
             for target in targets:
+                if target in test_targets:
+                    util.exec_cmd_with_color("./build/cmake/tests/%s" % target)
+                    return 
+
                 if target in self.golang_targets:
                     util.exec_cmd("./build/golang/%s" % target)
-                    continue
+                    return
 
                 if self.args.with_bazel:
                     util.exec_cmd(
