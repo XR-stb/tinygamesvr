@@ -24,8 +24,13 @@ Makefile
 # bazel
 MODULE.bazel.lock
 
-# python 
+# python
 .pyenv
 
 # vscode
 .vscode/
+
+# cmake fetchContent deps
+_deps/
+
+logs/

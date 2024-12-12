@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+#include <spdlog/spdlog.h>
 
 #include <bsoncxx/builder/stream/document.hpp>
 #include <bsoncxx/json.hpp>
@@ -6,12 +7,16 @@
 #include <mongocxx/instance.hpp>
 #include <mongocxx/uri.hpp>
 
+#include "common/log/log.h"
+#include "common/mongo/mongo.h"
+namespace PROJ_NS {
 TEST(MongoDBTest, ConnectTest) {
-  // 初始化 MongoDB 驱动
-  mongocxx::instance instance{};
-
-  // 创建客户端并连接到 MongoDB
-  mongocxx::client client{mongocxx::uri{"mongodb://localhost:27017"}};
+  int val = 4, x = 3;
+  MINFO("fmt: {1}, {0}", val, x);
+  MDEBUG("fmt: {1}, {0}", val, x);
+  MERROR("fmt: {1}, {0}", val, x);
+  MWARN("fmt: {1}, {0}", val, x);
+  auto&& client = MongoDB::Instance().GetClient();
 
   // 选择数据库和集合
   auto db = client["testdb"];
@@ -31,3 +36,4 @@ TEST(MongoDBTest, ConnectTest) {
   // 删除 恢复原状
   collection.delete_one(document.view());
 }
+}  // namespace PROJ_NS

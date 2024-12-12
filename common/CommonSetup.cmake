@@ -50,3 +50,18 @@ target_link_libraries(${PROJECT_NAME} PUBLIC cpp_redis tacopie)
 # 链接 mongocxx 和 bsoncxx 库
 target_link_libraries(${PROJECT_NAME} PUBLIC mongocxx bsoncxx)
 
+# 引入 FetchContent 模块
+include(FetchContent)
+
+# 配置 spdlog
+FetchContent_Declare(
+  spdlog
+  GIT_REPOSITORY https://github.com/gabime/spdlog.git
+  GIT_TAG v1.15.0  # 你可以选择最新的稳定版本
+)
+
+# 使能 spdlog
+FetchContent_MakeAvailable(spdlog)
+
+# 链接 spdlog
+target_link_libraries(${PROJECT_NAME} PUBLIC spdlog::spdlog)
