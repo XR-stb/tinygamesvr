@@ -34,3 +34,5 @@ MODULE.bazel.lock
 _deps/
 
 logs/
+
+scripts/shell/out

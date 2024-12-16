@@ -53,8 +53,6 @@ class Logger : public Singleton<Logger> {
   }(file))
 
 #include <cstdio>  // Include for snprintf
-#include <cstdio>  // 引入 snprintf
-#include <sstream>
 #include <string>
 
 #define MLOG(level, fmt, ...)                                                        \
