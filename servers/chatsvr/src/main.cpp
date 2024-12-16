@@ -13,6 +13,6 @@ int main() {
   std::set<::grpc::Service*> services;
   PROJ_NS::ChatServiceImpl service;
   services.insert(&service);
-  PROJ_NS::RunServer(50052, services);
+  PROJ_NS::RunServer(50052, services, "chatsvr");
   return 0;
 }

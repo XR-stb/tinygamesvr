@@ -5,19 +5,18 @@
 
 #include <cpp_redis/cpp_redis>
 
+#include "common/log/log.h"
 #include "common/redis/redis.h"
 #include "protocol/proto_gen/server/ss_chat.grpc.pb.h"
 #include "protocol/proto_gen/server/ss_chat.pb.h"
 namespace PROJ_NS {
-IMPLEMENT_SERVICE_METHOD(GreeterServiceImpl, SayHello, CSReqHello, CSResHello) {
-  std::string prefix("Hello");
-  res->set_message(prefix + req->name());
-  return grpc::Status::OK;
+IMPLEMENT_SERVICE_METHOD(GreeterServiceImpl, SayHello) {
+  std::string prefix("Hello ");
+  response_.set_message(prefix + request_.name());
+  return 0;
 }
 
-IMPLEMENT_SERVICE_METHOD(GreeterServiceImpl, SendChat, CSReqSendChat, CSResSendChat) {
-  spdlog::info("CSReqSendChat");
-
+IMPLEMENT_SERVICE_METHOD(GreeterServiceImpl, SendChat) {
   auto SendChatMessage = [](const std::string& user_id, const std::string& message) {
     std::unique_ptr<pb::Chat::Stub> stub = pb::Chat::NewStub(
         grpc::CreateChannel("localhost:50052", grpc::InsecureChannelCredentials()));
@@ -32,13 +31,15 @@ IMPLEMENT_SERVICE_METHOD(GreeterServiceImpl, SendChat, CSReqSendChat, CSResSendC
     if (status.ok()) {
       std::cout << "Message sent successfully!" << std::endl;
     } else {
-      std::cerr << "Failed to send message: " << status.error_code() << std::endl;
+      MERROR("SSReqSendChat failed msg: {}", status.error_message());
+      std::cerr << "Failed to send message: " << status.error_code() << "|"
+                << status.error_message() << std::endl;
     }
   };
 
-  SendChatMessage("123", req->msg());
+  SendChatMessage("123", request_.msg());
 
-  res->set_ret(pb::SUCCESS);
-  return grpc::Status::OK;
+  response_.set_ret(pb::SUCCESS);
+  return 0;
 }
 }  // namespace PROJ_NS

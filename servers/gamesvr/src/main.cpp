@@ -17,6 +17,7 @@ int main() {
   std::set<::grpc::Service*> services;
   PROJ_NS::GreeterServiceImpl service;
   services.insert(&service);
-  PROJ_NS::RunServer(50051, services);
+  PROJ_NS::RunServer(50051, services, "gamesvr");
+  // PROJ_NS::Logger::Instance().init("logs/gamesvr", "dev", 0, 0);
   return 0;
 }

@@ -1,5 +1,3 @@
-#pragma once
-
 #include <grpcpp/server_context.h>
 
 #include "game_rpc_object.h"
@@ -11,5 +9,6 @@ int GameRpcObject::BindData() {
     ruid_ = player_->GetRuid();
     // TODO: check is in login or unlogin
   }
+  return 0;
 }
 }  // namespace PROJ_NS

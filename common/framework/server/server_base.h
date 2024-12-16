@@ -1,6 +1,7 @@
 #pragma once
 
 #include <grpcpp/impl/service_type.h>
+
 #include <cstdint>
 #include <set>
 namespace PROJ_NS {
@@ -12,5 +13,5 @@ namespace PROJ_NS {
 //     };
 // };
 
-void RunServer(uint16_t port, std::set<::grpc::Service*> services);
-}
+void RunServer(uint16_t port, std::set<::grpc::Service*> services, std::string svr_name);
+}  // namespace PROJ_NS
