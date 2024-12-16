@@ -4,6 +4,7 @@
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <spdlog/spdlog.h>
 
+#include <cstdio>
 #include <memory>
 #include <string>
 
@@ -53,16 +54,19 @@ class Logger : public Singleton<Logger> {
 
 #include <cstdio>  // Include for snprintf
 #include <cstdio>  // 引入 snprintf
+#include <sstream>
+#include <string>
 
-#define MLOG(level, fmt, ...)                                                                     \
-  do {                                                                                            \
-    char log_buffer[1024];                                                                        \
-    snprintf(log_buffer, sizeof(log_buffer), "%s:%d|%s| " fmt, RELATIVE_PATH(__FILE__), __LINE__, \
-             __FUNCTION__, ##__VA_ARGS__);                                                        \
-    PROJ_NS::Logger::Instance().level(std::string(log_buffer));                                   \
+#define MLOG(level, fmt, ...)                                                        \
+  do {                                                                               \
+    std::ostringstream oss;                                                          \
+    oss << RELATIVE_PATH(__FILE__) << ":" << __LINE__ << "|" << __FUNCTION__ << "|"; \
+    std::string log_prefix = oss.str();                                              \
+    std::string final_fmt = log_prefix + fmt;                                        \
+    PROJ_NS::Logger::Instance().level(final_fmt.c_str(), __VA_ARGS__);               \
   } while (0)
 
-#define MINFO(fmt, ...) MLOG(info, "fmt: %s, %s", ##__VA_ARGS__)
-#define MWARN(fmt, ...) MLOG(warn, "fmt: %s, %s", ##__VA_ARGS__)
-#define MERROR(fmt, ...) MLOG(error, "fmt: %s, %s", ##__VA_ARGS__)
-#define MDEBUG(fmt, ...) MLOG(debug, "fmt: %s, %s", ##__VA_ARGS__)
+#define MINFO(fmt, ...) MLOG(info, fmt, ##__VA_ARGS__)
+#define MWARN(fmt, ...) MLOG(warn, fmt, ##__VA_ARGS__)
+#define MERROR(fmt, ...) MLOG(error, fmt, ##__VA_ARGS__)
+#define MDEBUG(fmt, ...) MLOG(debug, fmt, ##__VA_ARGS__)
