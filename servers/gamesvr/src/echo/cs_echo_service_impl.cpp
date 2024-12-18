@@ -5,11 +5,13 @@
 
 #include <cpp_redis/cpp_redis>
 
+#include "common/framework/rpc/rpc_service_registry.h"
 #include "common/log/log.h"
 #include "common/redis/redis.h"
 #include "protocol/proto_gen/server/ss_chat.grpc.pb.h"
 #include "protocol/proto_gen/server/ss_chat.pb.h"
 namespace PROJ_NS {
+REG_GRPC_SERVICE(GreeterServiceImpl);
 IMPLEMENT_SERVICE_METHOD(GreeterServiceImpl, SayHello) {
   std::string prefix("Hello ");
   response_.set_message(prefix + request_.name());

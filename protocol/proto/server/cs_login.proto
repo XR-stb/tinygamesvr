@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package pb;
+
+option go_package = ".;protocol";
+
+service LoginService {
+  rpc Login(CSReqLogin) returns (CSResLogin) {}
+}
+
+enum AccountType {
+  Phone = 0;
+}
+
+message LoginPlayerInfo {
+  uint64 uid = 1;      // 账号唯一ID
+  uint64 ruid = 2;     // 账号不同区的ID
+  uint32 zone_id = 3;  // 登录的小区ID
+}
+
+message CSReqLogin {
+  uint64 client_version = 1;      // 客户端版本
+  uint64 client_res_version = 2;  // 客户端资源版本
+  AccountType accountType = 3;    // 账号类型
+  string account_name = 4;        // 账号名
+  string password = 5;            // 密码
+  string ruler_name = 6;          // 账号名, 注册时用
+  uint32 zone_id = 7;             // 登录的小区Id
+  bool is_re_connect = 8;         // 是否重连
+}
+
+message CSResLogin {
+  LoginPlayerInfo player_info = 1;  // 玩家信息
+  int64 server_time = 2;            // 服务器时间
+}

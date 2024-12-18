@@ -1,47 +1,30 @@
 package main
 
 import (
-	"context"
-	"fmt"
+	"cloud/test/vulcan/base"
+	"flag"
 	"log"
-	"time"
-
-	pb "cloud/proto_gen/server"
-
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials/insecure"
 )
 
+type Arguments struct {
+	CaseName string
+}
+
+var args Arguments
+
+func init() {
+	flag.StringVar(&args.CaseName, "case", "login", "run case name")
+
+	flag.Parse()
+}
+
 func main() {
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-	defer cancel()
-
-	conn, err := grpc.DialContext(ctx, "localhost:50051", grpc.WithTransportCredentials(insecure.NewCredentials()))
-	if err != nil {
-		fmt.Printf("err: %v\n", err)
-		return
+	caseObj := base.GetManager().CaseObjMap[args.CaseName]
+	if caseObj != nil {
+		err := caseObj.Start()
+		if err != nil {
+			log.Panicf("run %v failed", args.CaseName)
+			return
+		}
 	}
-	defer conn.Close()
-
-	client := pb.NewGreeterClient(conn)
-
-	user := "world"
-	ctx, cancel = context.WithTimeout(context.Background(), time.Second)
-	defer cancel()
-
-	reply, err := client.SayHello(ctx, &pb.CSReqHello{Name: user})
-	if err != nil {
-		log.Fatalf("could not greet: %v", err)
-	}
-
-	fmt.Printf("Greeter received: %s\n", reply.GetMessage())
-
-	msg := "hello every chat"
-	res, err := client.SendChat(ctx, &pb.CSReqSendChat{Msg: msg})
-	if err != nil {
-		log.Fatalf("could not greet: %v", err)
-	}
-
-	// 打印响应
-	fmt.Printf("send chat ret: %v\n", res.Ret)
 }

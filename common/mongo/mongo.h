@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <mongocxx/client.hpp>
+#include <mongocxx/collection-fwd.hpp>
 #include <mongocxx/instance.hpp>
 #include <mongocxx/uri.hpp>
 
@@ -9,13 +10,6 @@
 namespace PROJ_NS {
 class MongoDB : public Singleton<MongoDB> {
  public:
-  mongocxx::client& GetClient() {
-    if (!connected) {
-      throw std::runtime_error("MongoDB client is not connected.");
-    }
-    return *client;
-  }
-
   MongoDB() : connected(false) {
     // https://www.mongodb.com/zh-cn/docs/languages/cpp/cpp-driver/current/connect/instance/
     // 必需：初始化 MongoDB 驱动实例
@@ -24,6 +18,21 @@ class MongoDB : public Singleton<MongoDB> {
   }
 
   ~MongoDB() = default;
+
+ public:
+  mongocxx::client& GetClient() {
+    if (!connected) {
+      throw std::runtime_error("MongoDB client is not connected.");
+    }
+    return *client;
+  }
+
+  mongocxx::collection GetTable(std::string collection_name) {
+    auto&& client = MongoDB::Instance().GetClient();
+    auto db = client["TinyGameSvrDB"];
+    auto collection = db[collection_name];
+    return collection;
+  }
 
  private:
   void connect(const std::string& uri) {

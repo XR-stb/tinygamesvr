@@ -8,5 +8,10 @@ TEST(LoggerTest, LogMarcoTest) {
   MDEBUG("fmt: {1}, {0}", val, x);
   MERROR("fmt: {1}, {0}", val, x);
   MWARN("fmt: {1}, {0}", val, x);
+
+  MINFO("empty param");
+  MDEBUG("empty param");
+  MERROR("empty param");
+  MWARN("empty param");
 }
 }  // namespace PROJ_NS

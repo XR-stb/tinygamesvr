@@ -20,17 +20,26 @@ WORKSPACE_DIR=$(dirname "$SCRIPTS_DIR")
 # PROTC_BIN="protoc"
 # PROTC_BIN="${WORKSPACE_DIR}/tools/proto/protoc"
 PROTC_BIN="${WORKSPACE_DIR}/tools/proto/bin/protoc"
+PROTC_GEN_MONGO_BIN="${WORKSPACE_DIR}/tools/proto/bin/protoc_gen_mongo"
 
 # 所有proto的文件路径
 PROTO_PATH="protocol/proto/server"
 
 # cpp 文件pb.c/pb.h输出 路径
 CPP_OUT_PATH="${WORKSPACE_DIR}/protocol/proto_gen/server"
-echo "CPP Output path: $CPP_OUT_PATH"
+# 清除 C++ 输出目录下的文件
+if [ -d "$CPP_OUT_PATH" ]; then
+    echo "Clearing files in $CPP_OUT_PATH"
+    rm -rf "${CPP_OUT_PATH:?}"/*
+fi
 
 # go 文件pb.go输出 路径
 GOLANG_OUT_PATH="${WORKSPACE_DIR}/golang/cloud/proto_gen/server"
-echo "GOLANG Output path: $GOLANG_OUT_PATH"
+# 清除 Go 输出目录下的文件
+if [ -d "$GOLANG_OUT_PATH" ]; then
+    echo "Clearing files in $GOLANG_OUT_PATH"
+    rm -rf "${GOLANG_OUT_PATH:?}"/*
+fi
 
 # 检查并创建 CPP 输出路径
 if [ ! -d "$CPP_OUT_PATH" ]; then
@@ -60,10 +69,14 @@ PROTOC_CMD="${PROTC_BIN} --proto_path=${PROTO_PATH} \
             ${PROTO_PATH}/*.proto"
 eval $PROTOC_CMD
 
-# # 生成grpc.pb.go 
+# # 生成grpc.pb.go
 # # --go-grpc_opt=paths=source_relative 使用相对路径去查找proto
 # PROTOC_CMD="${PROTC_BIN} \
 #             --go-grpc_out=${GOLANG_OUT_PATH} \
 #             --go-grpc_opt=paths=source_relative \
 #             ${PROTO_PATH}/*.proto"
+# eval $PROTOC_CMD
+
+# gen golang mongodb model and crud interface
+# PROTOC_CMD="${PROTC_GEN_MONGO_BIN} --proto_path=googleapis *.proto"
 # eval $PROTOC_CMD

@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package pb;
+
+option go_package = ".;protocol";
+
+message DBPlayerInfo {
+  uint64 uid = 1;           // 账号唯一ID
+  uint64 ruid = 2;          // 账号不同区的ID
+  uint32 zone_id = 3;       // 登录的小区ID
+  string account_name = 4;  // 账号名
+  string password = 5;      // 密码
+  string ruler_name = 6;    // 账号名
+}

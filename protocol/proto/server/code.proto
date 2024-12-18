@@ -7,4 +7,8 @@ option go_package = ".;protocol";
 enum Code {
   SUCCESS = 0;
   ERROR = 1;
+
+  // bussiness form 100000
+  ERR_ACCOUNT_ALREADTY_EXISTS = 100000;  // 账号已存在
+  ERR_ACCOUNT_OR_PASSWORD_INCORRECT = 100001;  // 账号或密码不存在 // 防止暴力尝试密码和套取账号
 }

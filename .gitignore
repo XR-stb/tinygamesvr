@@ -36,3 +36,5 @@ _deps/
 logs/
 
 scripts/shell/out
+
+.idea

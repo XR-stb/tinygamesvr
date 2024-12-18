@@ -11,11 +11,6 @@
 #include "common/mongo/mongo.h"
 namespace PROJ_NS {
 TEST(MongoDBTest, ConnectTest) {
-  int val = 4, x = 3;
-  MINFO("fmt: {1}, {0}", val, x);
-  MDEBUG("fmt: {1}, {0}", val, x);
-  MERROR("fmt: {1}, {0}", val, x);
-  MWARN("fmt: {1}, {0}", val, x);
   auto&& client = MongoDB::Instance().GetClient();
 
   // 选择数据库和集合

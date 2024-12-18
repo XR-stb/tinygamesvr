@@ -61,10 +61,34 @@ class Logger : public Singleton<Logger> {
     oss << RELATIVE_PATH(__FILE__) << ":" << __LINE__ << "|" << __FUNCTION__ << "|"; \
     std::string log_prefix = oss.str();                                              \
     std::string final_fmt = log_prefix + fmt;                                        \
-    PROJ_NS::Logger::Instance().level(final_fmt.c_str(), __VA_ARGS__);               \
-  } while (0)
+    PROJ_NS::Logger::Instance().level(final_fmt.c_str(), ##__VA_ARGS__);             \
+  } while (0);
 
 #define MINFO(fmt, ...) MLOG(info, fmt, ##__VA_ARGS__)
 #define MWARN(fmt, ...) MLOG(warn, fmt, ##__VA_ARGS__)
 #define MERROR(fmt, ...) MLOG(error, fmt, ##__VA_ARGS__)
 #define MDEBUG(fmt, ...) MLOG(debug, fmt, ##__VA_ARGS__)
+
+#define MINFO_RETURN(code, fmt, ...) \
+  do {                               \
+    MINFO(fmt, ##__VA_ARGS__);       \
+    return code;                     \
+  } while (0);
+
+#define MWARN_RETURN(code, fmt, ...) \
+  do {                               \
+    MWARN(fmt, ##__VA_ARGS__);       \
+    return code;                     \
+  } while (0);
+
+#define MERROR_RETURN(code, fmt, ...) \
+  do {                                \
+    MERROR(fmt, ##__VA_ARGS__);       \
+    return code;                      \
+  } while (0);
+
+#define MDEBUG_RETURN(code, fmt, ...) \
+  do {                                \
+    MDEBUG(fmt, ##__VA_ARGS__);       \
+    return code;                      \
+  } while (0);

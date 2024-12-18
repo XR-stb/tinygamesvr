@@ -11,8 +11,10 @@
 
 #include "common/log/log.h"
 #include "common/mongo/mongo.h"
+#include "framework/rpc/rpc_service_registry.h"
 
 namespace PROJ_NS {
+REG_GRPC_SERVICE(ChatServiceImpl);
 IMPLEMENT_SERVICE_METHOD(ChatServiceImpl, SendChat) {
   int val = 4;
   MINFO("what {}", val);
