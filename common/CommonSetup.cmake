@@ -5,6 +5,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 # 定义所有源文件和头文件的搜索路径
 set(SEARCH_DIRS
+    "./"
     "src"
     "${CMAKE_SOURCE_DIR}/protocol/proto_gen/server"
     "${CMAKE_SOURCE_DIR}/common"
@@ -16,7 +17,10 @@ set(SOURCES "")
 
 # 搜索所有头文件和源文件
 foreach(DIR IN LISTS SEARCH_DIRS)
-    file(GLOB_RECURSE HEADER_FILES "${DIR}/*.h")
+    file(GLOB_RECURSE HEADER_FILES
+         "${DIR}/*.h"
+         "${DIR}/*.hpp"
+    )
     file(GLOB_RECURSE SOURCE_FILES
         "${DIR}/*.cpp"
         "${DIR}/*.cc"
@@ -64,3 +68,6 @@ FetchContent_MakeAvailable(spdlog)
 
 # 链接 spdlog
 target_link_libraries(${PROJECT_NAME} PUBLIC spdlog::spdlog)
+
+# ZeroMQ
+target_link_libraries(${PROJECT_NAME} PUBLIC zmq)

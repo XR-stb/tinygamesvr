@@ -35,3 +35,9 @@ go get go.mongodb.org/mongo-driver/mongo
 # 准备C++驱动: https://www.mongodb.com/zh-cn/docs/languages/cpp/cpp-driver/current/installation/linux/
 sh scripts/shell/mongo_cpp_diver.sh
 ```
+
+准备ZeroMQ库
+```
+sudo apt-get update
+sudo apt-get install -y libzmq3-dev
+```
