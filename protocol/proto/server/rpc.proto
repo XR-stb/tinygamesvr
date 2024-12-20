@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package rpc;
+
+option go_package = ".;protocol";
+
+message RpcRequest {
+  string method = 1;
+  bytes payload = 2;
+}
+
+message RpcResponse {
+  int32 code = 1;
+  string message = 2;
+  bytes payload = 3;
+}
