@@ -12,6 +12,7 @@ project_root = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(project_root + "/scripts/python")
 try:
     import util
+    from log import logger
 except:
     pass
 
@@ -38,23 +39,37 @@ class Make:
         getattr(self, action)()
 
     def build_targets(self, targets):
+        targets_success = []
+        targets_failed = []
         for target in targets:
+            build_ret = 114514
             if target in self.golang_targets:
-                util.exec_cmd(
+                build_ret = util.exec_cmd_with_color(
                     "cd golang/cloud && go build -o ../../build/golang/ ./cmd/%s"
                     % target
                 )
-                continue
+
             if target in self.cpp_targets:
                 if self.args.with_bazel:
-                    util.exec_cmd_with_color(
+                    build_ret = util.exec_cmd_with_color(
                         "bazel build //servers/%s:%s --symlink_prefix=build/bazel/"
                         % (target, target)
                     )
                 else:
-                    util.exec_cmd("cmake --build . --target %s -j4" % target)
-                continue
-            raise Exception("unkown tartget: %s" % target)
+                    build_ret = util.exec_cmd_with_color("cmake --build . --target %s -j4" % target)
+
+            if build_ret == 114514:
+                raise Exception("unkown tartget: %s" % target)
+
+            if build_ret != 0:
+                targets_failed.append(str(target))
+            else:
+                targets_success.append(str(target))
+
+        if targets_success:
+            logger.Info("Success targets: " + ", ".join(targets_success))
+        if targets_failed:
+            logger.Error("Failed targets: " + ", ".join(targets_failed))
 
     def _build_(self):
         targets = self.args.targets
@@ -76,21 +91,21 @@ class Make:
                     return 
 
                 if target in self.golang_targets:
-                    util.exec_cmd("./build/golang/%s" % target)
+                    util.exec_cmd_with_color("./build/golang/%s" % target)
                     return
 
                 if self.args.with_bazel:
-                    util.exec_cmd(
+                    util.exec_cmd_with_color(
                         "bazel run //servers/%s:%s --symlink_prefix=build/bazel/"
                         % (target, target)
                     )
                 elif self.args.with_cmake:
-                    util.exec_cmd("./build/cmake/servers/%s/%s" % (target, target))
+                    util.exec_cmd_with_color("./build/cmake/servers/%s/%s" % (target, target))
                 else:
                     raise Exception("unknown build tools")
 
     def _genproto_(self):
-        util.exec_cmd("bash ./scripts/shell/gen_proto.sh")
+        util.exec_cmd_with_color("bash ./scripts/shell/gen_proto.sh")
 
 
 def parse_args():

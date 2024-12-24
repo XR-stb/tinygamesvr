@@ -1,10 +1,8 @@
 #include "common/framework/server/server_base.h"
-#include "framework/rpc/rpc_service_registry.h"
-
+#include "servers/gamesvr/src/login/cs_login_service_impl.h"
 using namespace PROJ_NS;
 
 int main(int argc, char** argv) {
-  std::set<::grpc::Service*> services;
-  RunServer(50051, GetServiceRegistry(), "gamesvr");
+  ServerBase::Instance().Run("gamesvr", "50051", "5051");
   return 0;
 }

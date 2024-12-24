@@ -37,17 +37,17 @@ class RpcServer {
     request.ParseFromString(request_str);
 
     grpc::ServerContext context;
-    auto it = PROJ_NS::factory_map.find(request.method());
-    for (auto& e : PROJ_NS::factory_map) {
+    auto it = PROJ_NS::get_factory_map().find(request.method());
+    for (auto& e : PROJ_NS::get_factory_map()) {
       std::cout << e.first << std::endl;
     }
-    if (it != PROJ_NS::factory_map.end()) {
+    if (it != PROJ_NS::get_factory_map().end()) {
       auto request_message = it->second.first();
       auto response_message = it->second.second();
 
       request_message->ParseFromString(request.payload());
-      grpc::Status status = PROJ_NS::rpc_map[request.method()](&context, request_message.get(),
-                                                               response_message.get());
+      grpc::Status status = PROJ_NS::get_rpc_map()[request.method()](
+          &context, request_message.get(), response_message.get());
 
       rpc::RpcResponse response;
       response.set_code(status.error_code());

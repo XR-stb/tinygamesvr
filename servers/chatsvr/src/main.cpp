@@ -4,7 +4,6 @@
 using namespace PROJ_NS;
 
 int main(int argc, char** argv) {
-  std::set<::grpc::Service*> services;
-  RunServer(50052, GetServiceRegistry(), "chatsvr");
+  ServerBase::Instance().Run("gamesvr", "50052", "5052");
   return 0;
 }

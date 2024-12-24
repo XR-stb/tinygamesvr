@@ -6,7 +6,8 @@
 #include "protocol/proto_gen/server/ss_chat.pb.h"
 
 namespace PROJ_NS {
-class ChatServiceImpl final : public pb::Chat::Service {
-  DECLARE_SERVICE_METHOD(SendChat, SSReqSendChat, SSResSendChat, rpc::BaseRpcObject);
+class ChatServiceImpl final : public pb::Chat::Service, public Singleton<ChatServiceImpl> {
+  DECLARE_SERVICE_METHOD(ChatServiceImpl, SendChat, SSReqSendChat, SSResSendChat,
+                         rpc::BaseRpcObject);
 };
 }  // namespace PROJ_NS

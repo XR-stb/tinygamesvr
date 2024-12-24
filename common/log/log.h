@@ -69,26 +69,26 @@ class Logger : public Singleton<Logger> {
 #define MERROR(fmt, ...) MLOG(error, fmt, ##__VA_ARGS__)
 #define MDEBUG(fmt, ...) MLOG(debug, fmt, ##__VA_ARGS__)
 
-#define MINFO_RETURN(code, fmt, ...) \
+#define MINFO_RETURN(ret, fmt, ...) \
   do {                               \
     MINFO(fmt, ##__VA_ARGS__);       \
-    return code;                     \
+    return ret;                     \
   } while (0);
 
-#define MWARN_RETURN(code, fmt, ...) \
+#define MWARN_RETURN(ret, fmt, ...) \
   do {                               \
     MWARN(fmt, ##__VA_ARGS__);       \
-    return code;                     \
+    return ret;                     \
   } while (0);
 
-#define MERROR_RETURN(code, fmt, ...) \
+#define MERROR_RETURN(ret, fmt, ...) \
   do {                                \
     MERROR(fmt, ##__VA_ARGS__);       \
-    return code;                      \
+    return ret;                      \
   } while (0);
 
-#define MDEBUG_RETURN(code, fmt, ...) \
+#define MDEBUG_RETURN(ret, fmt, ...) \
   do {                                \
     MDEBUG(fmt, ##__VA_ARGS__);       \
-    return code;                      \
+    return ret;                      \
   } while (0);

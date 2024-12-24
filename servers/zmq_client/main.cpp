@@ -3,8 +3,6 @@
 #include "protocol/proto_gen/server/cs_hello.pb.h"
 #include "protocol/proto_gen/server/rpc.pb.h"
 
-
-
 void sendMsg(zmq::socket_t& socket) {
   rpc::RpcRequest request;
   request.set_method("GreeterServiceImpl.SayHello");
@@ -38,8 +36,7 @@ void sendMsg(zmq::socket_t& socket) {
 int main() {
   zmq::context_t context(1);
   zmq::socket_t socket(context, ZMQ_REQ);
-  socket.connect("tcp://localhost:5555");
-  sendMsg(socket);
+  socket.connect("tcp://localhost:5051");
   sendMsg(socket);
   return 0;
 }
