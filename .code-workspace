@@ -24,9 +24,6 @@
         "go.lintFlags": [],
         "go.lintOnSave": "package",
         "go.formatTool": "goimports",
-        "gopls": {
-            "formatting.local": "git.woa.com/wedo/golang/cloud"
-        },
         "[python]": {
             "editor.tabSize": 4,
             "editor.formatOnSave": true,
